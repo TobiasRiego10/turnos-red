@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Monitor de turnos</title>
+  </head>
+  <body>
+    <h1>TurnosRed en tiempo real</h1>
+    <p id="estado">Conectando...</p>
+    <ul id="lista"></ul>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+      const lista = document.querySelector("#lista");
+      const estado = document.querySelector("#estado");
+      let turnos = [];
+
+      function mostrarTurnos() {
+        lista.replaceChildren();
+
+        for (const turno of turnos) {
+          const elemento = document.createElement("li");
+          elemento.textContent = `${turno.id} - ${turno.paciente} - ${turno.fecha} ${turno.hora}`;
+          lista.appendChild(elemento);
+        }
+      }
+
+      fetch("/turnos")
+        .then((respuesta) => respuesta.json())
+        .then((datos) => {
+          turnos = datos;
+          mostrarTurnos();
+        });
+
+      socket.on("connect", () => {
+        estado.textContent = "Conectado en tiempo real";
+      });
+
+      socket.on("turno:nuevo", (turno) => {
+        turnos.push(turno);
+        mostrarTurnos();
+      });
+
+      socket.on("turno:actualizado", (turno) => {
+        turnos = turnos.map((actual) =>
+          actual.id === turno.id ? turno : actual,
+        );
+        mostrarTurnos();
+      });
+
+      socket.on("turno:eliminado", (turno) => {
+        turnos = turnos.filter((actual) => actual.id !== turno.id);
+        mostrarTurnos();
+      });
+    </script>
+  </body>
+</html>
