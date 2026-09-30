@@ -1,0 +1,591 @@
+{
+  "info": {
+    "_postman_id": "02b43021-41b7-450d-84d3-85366c8af1bf",
+    "name": "TurnosRed",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58620702",
+    "_collection_link": "https://go.postman.co/collection/58620702-02b43021-41b7-450d-84d3-85366c8af1bf?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Get data",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "postman-echo.com/get",
+          "host": [
+            "postman-echo",
+            "com"
+          ],
+          "path": [
+            "get"
+          ]
+        },
+        "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+      },
+      "response": []
+    },
+    {
+      "name": "Post data",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Successful POST request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+              "});",
+              ""
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "postman-echo.com/post",
+          "host": [
+            "postman-echo",
+            "com"
+          ],
+          "path": [
+            "post"
+          ]
+        },
+        "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+      },
+      "response": []
+    },
+    {
+      "name": "Listar turnos",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"La respuesta es JSON\", function () {\r\n    pm.response.to.be.json;\r\n});\r\n\r\npm.test(\"La respuesta contiene una lista de turnos\", function () {\r\n    const jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.be.an(\"array\");\r\n});\r\n\r\npm.test(\"Los turnos tienen la estructura esperada\", function () {\r\n    const jsonData = pm.response.json();\r\n\r\n    jsonData.forEach(function (turno) {\r\n        pm.expect(turno).to.have.property(\"id\");\r\n        pm.expect(turno).to.have.property(\"paciente\");\r\n        pm.expect(turno).to.have.property(\"documento\");\r\n        pm.expect(turno).to.have.property(\"especialidad\");\r\n        pm.expect(turno).to.have.property(\"fecha\");\r\n        pm.expect(turno).to.have.property(\"hora\");\r\n        pm.expect(turno).to.have.property(\"confirmado\");\r\n        pm.expect(turno).to.have.property(\"medicoId\");\r\n    });\r\n});\r\n\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/turnos",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "turnos"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Listar turnos",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/turnos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "turnos"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "x-powered-by",
+              "value": "Express"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "content-length",
+              "value": "459"
+            },
+            {
+              "key": "etag",
+              "value": "W/\"1cb-0IXTRedBtE9wgM5i+ZC4fwM6A30\""
+            },
+            {
+              "key": "date",
+              "value": "Wed, 30 Sep 2026 13:55:29 GMT"
+            },
+            {
+              "key": "connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "keep-alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "[\n  {\n    \"id\": 102,\n    \"paciente\": \"Carlos Ruiz\",\n    \"documento\": \"31654210\",\n    \"especialidad\": \"pediatría\",\n    \"fecha\": \"2026-08-14\",\n    \"hora\": \"10:00\",\n    \"confirmado\": true,\n    \"medicoId\": 1\n  },\n  {\n    \"id\": 106,\n    \"paciente\": \"Lucia Gomez\",\n    \"documento\": \"40555111\",\n    \"especialidad\": \"clinica\",\n    \"fecha\": \"2026-09-25\",\n    \"hora\": \"11:30\",\n    \"confirmado\": true,\n    \"medicoId\": 3\n  },\n  {\n    \"id\": 107,\n    \"paciente\": \"Juan Perez\",\n    \"documento\": \"40123456\",\n    \"especialidad\": \"pediatría\",\n    \"fecha\": \"2026-10-10\",\n    \"hora\": \"09:30\",\n    \"confirmado\": true,\n    \"medicoId\": 1\n  }\n]"
+        }
+      ]
+    },
+    {
+      "name": "Crear turno",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 201 Created\", function () {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\npm.test(\"La respuesta es JSON\", function () {\r\n    pm.response.to.be.json;\r\n});\r\n\r\npm.test(\"El turno creado tiene un ID\", function () {\r\n    const jsonData = pm.response.json();\r\n\r\n    pm.expect(jsonData).to.have.property(\"id\");\r\n    pm.expect(jsonData.id).to.be.a(\"number\");\r\n});\r\n\r\npm.test(\"El turno creado tiene la estructura esperada\", function () {\r\n    const jsonData = pm.response.json();\r\n\r\n    pm.expect(jsonData).to.have.property(\"paciente\");\r\n    pm.expect(jsonData).to.have.property(\"documento\");\r\n    pm.expect(jsonData).to.have.property(\"especialidad\");\r\n    pm.expect(jsonData).to.have.property(\"fecha\");\r\n    pm.expect(jsonData).to.have.property(\"hora\");\r\n    pm.expect(jsonData).to.have.property(\"confirmado\");\r\n    pm.expect(jsonData).to.have.property(\"medicoId\");\r\n});\r\n\r\n// Guarda automáticamente el ID para las próximas requests\r\nconst jsonData = pm.response.json();\r\npm.environment.set(\"turnoId\", jsonData.id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"paciente\": \"Juan Perez\",\r\n  \"documento\": \"40123456\",\r\n  \"especialidad\": \"Pediatría\",\r\n  \"fecha\": \"2026-10-10\",\r\n  \"hora\": \"09:30\",\r\n  \"confirmado\": true,\r\n  \"medicoId\": 1\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/turnos",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "turnos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Buscar turno creado",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"La respuesta es JSON\", function () {\r\n    pm.response.to.be.json;\r\n});\r\n\r\npm.test(\"El ID coincide con el turno creado\", function () {\r\n    const jsonData = pm.response.json();\r\n    const turnoId = Number(pm.environment.get(\"turnoId\"));\r\n\r\n    pm.expect(jsonData.id).to.eql(turnoId);\r\n});\r\n\r\npm.test(\"El turno tiene la estructura esperada\", function () {\r\n    const jsonData = pm.response.json();\r\n\r\n    pm.expect(jsonData).to.have.property(\"id\");\r\n    pm.expect(jsonData).to.have.property(\"paciente\");\r\n    pm.expect(jsonData).to.have.property(\"documento\");\r\n    pm.expect(jsonData).to.have.property(\"especialidad\");\r\n    pm.expect(jsonData).to.have.property(\"fecha\");\r\n    pm.expect(jsonData).to.have.property(\"hora\");\r\n    pm.expect(jsonData).to.have.property(\"confirmado\");\r\n    pm.expect(jsonData).to.have.property(\"medicoId\");\r\n});\r\n\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/turnos/{{turnoId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "turnos",
+            "{{turnoId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Turno inexistente",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 404 Not Found\", function () {\r\n    pm.response.to.have.status(404);\r\n});\r\n\r\npm.test(\"La respuesta es JSON\", function () {\r\n    pm.response.to.be.json;\r\n});\r\n\r\npm.test(\"El error tiene el formato estándar\", function () {\r\n    const jsonData = pm.response.json();\r\n\r\n    pm.expect(jsonData.status).to.eql(404);\r\n    pm.expect(jsonData.message).to.eql(\"Turno no encontrado\");\r\n    pm.expect(jsonData.code).to.eql(\"NOT_FOUND\");\r\n    pm.expect(jsonData.details).to.be.an(\"array\");\r\n});\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/turnos/99999",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "turnos",
+            "99999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listar medicos",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"La respuesta es JSON\", function () {\r\n    pm.response.to.be.json;\r\n});\r\n\r\npm.test(\"La respuesta contiene una lista de médicos\", function () {\r\n    const jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.be.an(\"array\");\r\n});\r\n\r\npm.test(\"Los médicos tienen la estructura esperada\", function () {\r\n    const jsonData = pm.response.json();\r\n\r\n    jsonData.forEach(function (medico) {\r\n        pm.expect(medico).to.have.property(\"id\");\r\n        pm.expect(medico).to.have.property(\"nombre\");\r\n        pm.expect(medico).to.have.property(\"especialidad\");\r\n        pm.expect(medico).to.have.property(\"matricula\");\r\n        pm.expect(medico).to.have.property(\"disponible\");\r\n    });\r\n});\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/medicos",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "medicos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Crear medico",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 201 Created\", function () {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\npm.test(\"La respuesta es JSON\", function () {\r\n    pm.response.to.be.json;\r\n});\r\n\r\npm.test(\"El médico creado tiene un ID\", function () {\r\n    const jsonData = pm.response.json();\r\n\r\n    pm.expect(jsonData).to.have.property(\"id\");\r\n    pm.expect(jsonData.id).to.be.a(\"number\");\r\n});\r\n\r\npm.test(\"El médico creado tiene la estructura esperada\", function () {\r\n    const jsonData = pm.response.json();\r\n\r\n    pm.expect(jsonData).to.have.property(\"nombre\");\r\n    pm.expect(jsonData).to.have.property(\"especialidad\");\r\n    pm.expect(jsonData).to.have.property(\"matricula\");\r\n    pm.expect(jsonData).to.have.property(\"disponible\");\r\n});\r\n\r\n// Guarda automáticamente el ID del médico creado\r\nconst jsonData = pm.response.json();\r\npm.environment.set(\"medicoId\", jsonData.id);\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nombre\": \"Laura Martínez\",\r\n  \"especialidad\": \"Nutrición\",\r\n  \"matricula\": \"MP-2001\",\r\n  \"disponible\": true\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/medicos",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "medicos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Buscar medico creado",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"La respuesta es JSON\", function () {\r\n    pm.response.to.be.json;\r\n});\r\n\r\npm.test(\"El ID coincide con el médico creado\", function () {\r\n    const jsonData = pm.response.json();\r\n    const medicoId = Number(pm.environment.get(\"medicoId\"));\r\n\r\n    pm.expect(jsonData.id).to.eql(medicoId);\r\n});\r\n\r\npm.test(\"El médico tiene la estructura esperada\", function () {\r\n    const jsonData = pm.response.json();\r\n\r\n    pm.expect(jsonData).to.have.property(\"id\");\r\n    pm.expect(jsonData).to.have.property(\"nombre\");\r\n    pm.expect(jsonData).to.have.property(\"especialidad\");\r\n    pm.expect(jsonData).to.have.property(\"matricula\");\r\n    pm.expect(jsonData).to.have.property(\"disponible\");\r\n});\r\n\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/medicos/{{medicoId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "medicos",
+            "{{medicoId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Medico invalido",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 400 Bad Request\", function () {\r\n    pm.response.to.have.status(400);\r\n});\r\n\r\npm.test(\"La respuesta es JSON\", function () {\r\n    pm.response.to.be.json;\r\n});\r\n\r\npm.test(\"El error tiene el formato estándar\", function () {\r\n    const jsonData = pm.response.json();\r\n\r\n    pm.expect(jsonData.status).to.eql(400);\r\n    pm.expect(jsonData.message).to.eql(\"Error de validación en los datos ingresados\");\r\n    pm.expect(jsonData.code).to.eql(\"VALIDATION_ERROR\");\r\n    pm.expect(jsonData.details).to.be.an(\"array\");\r\n});\r\n\r\npm.test(\"Zod informa los campos con errores\", function () {\r\n    const jsonData = pm.response.json();\r\n    const campos = jsonData.details.map(error => error.campo);\r\n\r\n    pm.expect(campos).to.include(\"nombre\");\r\n    pm.expect(campos).to.include(\"especialidad\");\r\n    pm.expect(campos).to.include(\"matricula\");\r\n    pm.expect(campos).to.include(\"disponible\");\r\n});\r\n\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nombre\": \"\",\r\n  \"especialidad\": \"Cardiología\",\r\n  \"matricula\": \"\",\r\n  \"disponible\": \"si\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/medicos",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "medicos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Filtrar turnos por especialidad",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"La respuesta es JSON\", function () {\r\n    pm.response.to.be.json;\r\n});\r\n\r\npm.test(\"La respuesta es una lista\", function () {\r\n    const jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.be.an(\"array\");\r\n});\r\n\r\npm.test(\"Todos los turnos son de Pediatría\", function () {\r\n    const jsonData = pm.response.json();\r\n\r\n    jsonData.forEach(function (turno) {\r\n        pm.expect(turno.especialidad.toLowerCase()).to.eql(\"pediatría\");\r\n    });\r\n});\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/turnos?especialidad=pediatría",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "turnos"
+          ],
+          "query": [
+            {
+              "key": "especialidad",
+              "value": "pediatría"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Filtrar turnos por fecha",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"La respuesta es JSON\", function () {\r\n    pm.response.to.be.json;\r\n});\r\n\r\npm.test(\"La respuesta es una lista\", function () {\r\n    const jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.be.an(\"array\");\r\n});\r\n\r\npm.test(\"Todos los turnos corresponden a la fecha indicada\", function () {\r\n    const jsonData = pm.response.json();\r\n\r\n    jsonData.forEach(function (turno) {\r\n        pm.expect(turno.fecha).to.eql(\"2026-09-25\");\r\n    });\r\n});\r\n\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/turnos?fecha=2026-09-25",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "turnos"
+          ],
+          "query": [
+            {
+              "key": "fecha",
+              "value": "2026-09-25"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Filtrar turnos por medicoId",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"La respuesta es JSON\", function () {\r\n    pm.response.to.be.json;\r\n});\r\n\r\npm.test(\"La respuesta es una lista\", function () {\r\n    const jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.be.an(\"array\");\r\n});\r\n\r\npm.test(\"Todos los turnos corresponden al medicoId indicado\", function () {\r\n    const jsonData = pm.response.json();\r\n\r\n    jsonData.forEach(function (turno) {\r\n        pm.expect(turno.medicoId).to.eql(1);\r\n    });\r\n});\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/turnos?medicoId=1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "turnos"
+          ],
+          "query": [
+            {
+              "key": "medicoId",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Filtrar médicos por especialidad",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"La respuesta es JSON\", function () {\r\n    pm.response.to.be.json;\r\n});\r\n\r\npm.test(\"La respuesta es una lista\", function () {\r\n    const jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.be.an(\"array\");\r\n});\r\n\r\npm.test(\"Todos los médicos son de Pediatría\", function () {\r\n    const jsonData = pm.response.json();\r\n\r\n    jsonData.forEach(function (medico) {\r\n        pm.expect(medico.especialidad.toLowerCase()).to.eql(\"pediatría\");\r\n    });\r\n});\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/medicos?especialidad=Pediatría",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "medicos"
+          ],
+          "query": [
+            {
+              "key": "especialidad",
+              "value": "Pediatría"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Filtrar médicos por disponibilidad",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"La respuesta es JSON\", function () {\r\n    pm.response.to.be.json;\r\n});\r\n\r\npm.test(\"La respuesta es una lista\", function () {\r\n    const jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.be.an(\"array\");\r\n});\r\n\r\npm.test(\"Todos los médicos están no disponibles\", function () {\r\n    const jsonData = pm.response.json();\r\n\r\n    jsonData.forEach(function (medico) {\r\n        pm.expect(medico.disponible).to.eql(false);\r\n    });\r\n});\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/medicos?disponible=false",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "medicos"
+          ],
+          "query": [
+            {
+              "key": "disponible",
+              "value": "false"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Turno inválido",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": ""
+        }
+      },
+      "response": []
+    }
+  ]
+}

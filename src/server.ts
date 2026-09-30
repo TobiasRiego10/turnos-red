@@ -1,10 +1,8 @@
 import "dotenv/config";
-import { createServer } from "node:http";
 import express from "express";
-import { Server } from "socket.io";
-import type { Turno } from "./models/turno.js";
 import { turnosRouter } from "./routes/turnosRoutes.js";
-import { eventosTurnos } from "./services/eventosTurnos.js";
+import medicosRouter from "./routes/medicosRoutes.js";
+import { errorHandler } from "./middleware/errorHandler.js";
 
 const app = express();
 const port = Number(process.env.PORT ?? 3000);
@@ -17,26 +15,13 @@ app.get("/", (_req, res) => {
 });
 
 app.use("/turnos", turnosRouter);
+app.use("/medicos", medicosRouter);
 
-const httpServer = createServer(app);
-const io = new Server(httpServer);
+// Middleware centralizado de errores.
+// Debe ir después de todas las rutas.
+app.use(errorHandler);
 
-io.on("connection", (socket) => {
-  console.log(`Cliente conectado: ${socket.id}`);
-});
-
-eventosTurnos.on("turno:creado", (turno: Turno) => {
-  io.emit("turno:nuevo", turno);
-});
-
-eventosTurnos.on("turno:actualizado", (turno: Turno) => {
-  io.emit("turno:actualizado", turno);
-});
-
-eventosTurnos.on("turno:eliminado", (turno: Turno) => {
-  io.emit("turno:eliminado", turno);
-});
-
-httpServer.listen(port, () => {
+app.listen(port, () => {
   console.log(`Servidor disponible en http://localhost:${port}`);
 });
+
