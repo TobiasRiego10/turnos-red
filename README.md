@@ -47,7 +47,17 @@ DATA_FILE=./data/turnos.json
 ```
 
 ## Ejecución
+### Ejecución en desarrollo
 
+Para ejecutar el proyecto directamente en modo desarrollo:
+
+```powershell
+npm run dev
+```
+
+Este comando utiliza `tsx` para ejecutar `src/server.ts` y reinicia automáticamente el servidor cuando se detectan cambios en el código fuente.
+
+### Ejecución compilada
 Compilar el proyecto:
 
 ```powershell
@@ -68,6 +78,7 @@ http://localhost:3000
 
 ## Comandos
 
+- `npm run dev`: inicia el servidor en modo desarrollo utilizando tsx.
 - `npm run build`: compila TypeScript y genera los archivos JavaScript en `dist/`.
 - `npm start`: inicia el servidor compilado.
 - `npm run lint`: analiza los archivos TypeScript con ESLint.
@@ -122,6 +133,109 @@ turnos-red/
 | PUT | `/turnos/:id` | Actualiza un turno |
 | DELETE | `/turnos/:id` | Elimina un turno |
 
+### GET /turnos
+
+Obtiene la lista de turnos registrados.
+
+**Query Params opcionales:**
+
+- `especialidad`: filtra los turnos por especialidad.
+- `fecha`: filtra los turnos por fecha.
+- `medicoId`: filtra los turnos por médico. Debe ser un número entero positivo.
+
+**Respuestas:**
+
+- `200 OK`: devuelve la lista de turnos.
+- `400 Bad Request`: `medicoId` no es un número entero positivo.
+- `500 Internal Server Error`: error interno del servidor.
+
+### GET /turnos/:id
+
+Obtiene un turno específico mediante su identificador.
+
+**Params:**
+
+- `id`: identificador del turno. Debe ser un número entero positivo.
+
+**Respuestas:**
+
+- `200 OK`: devuelve el turno encontrado.
+- `400 Bad Request`: el ID ingresado no es válido.
+- `404 Not Found`: no existe un turno con ese ID.
+- `500 Internal Server Error`: error interno del servidor.
+
+### POST /turnos
+
+Crea un nuevo turno. El ID es generado automáticamente por la API.
+
+**Body JSON:**
+
+```json
+{
+  "paciente": "Juan Perez",
+  "documento": "40123456",
+  "especialidad": "Pediatría",
+  "fecha": "2026-10-10",
+  "hora": "09:30",
+  "confirmado": true,
+  "observaciones": "Primera consulta",
+  "medicoId": 1
+}
+```
+
+El campo `observaciones` es opcional.
+
+**Respuestas:**
+
+- `201 Created`: turno creado correctamente.
+- `400 Bad Request`: los datos enviados no cumplen con el esquema de validación.
+- `500 Internal Server Error`: error interno del servidor.
+
+### PUT /turnos/:id
+
+Actualiza un turno existente.
+
+**Params:**
+
+- `id`: identificador del turno que se desea actualizar. Debe ser un número entero positivo.
+
+**Body JSON:**
+
+```json
+{
+  "paciente": "Juan Perez",
+  "documento": "40123456",
+  "especialidad": "Pediatría",
+  "fecha": "2026-10-11",
+  "hora": "10:00",
+  "confirmado": true,
+  "observaciones": "Control médico",
+  "medicoId": 1
+}
+```
+
+**Respuestas:**
+
+- `200 OK`: turno actualizado correctamente.
+- `400 Bad Request`: ID o datos del turno inválidos.
+- `404 Not Found`: no existe un turno con ese ID.
+- `500 Internal Server Error`: error interno del servidor.
+
+### DELETE /turnos/:id
+
+Elimina un turno existente.
+
+**Params:**
+
+- `id`: identificador del turno que se desea eliminar. Debe ser un número entero positivo.
+
+**Respuestas:**
+
+- `204 No Content`: turno eliminado correctamente.
+- `400 Bad Request`: el ID ingresado no es válido.
+- `404 Not Found`: no existe un turno con ese ID.
+- `500 Internal Server Error`: error interno del servidor.
+
 ### Ejemplo para crear un turno
 
 ```json
@@ -147,6 +261,99 @@ El identificador del turno es generado por la API.
 | POST | `/medicos` | Registra un nuevo médico |
 | PUT | `/medicos/:id` | Actualiza un médico |
 | DELETE | `/medicos/:id` | Elimina un médico |
+
+### GET /medicos
+
+Obtiene la lista de médicos registrados.
+
+**Query Params opcionales:**
+
+- `especialidad`: filtra los médicos por especialidad.
+- `disponible`: filtra los médicos según su disponibilidad utilizando `true` o `false`.
+
+**Respuestas:**
+
+- `200 OK`: devuelve la lista de médicos.
+- `500 Internal Server Error`: error interno del servidor.
+
+### GET /medicos/:id
+
+Obtiene un médico específico mediante su identificador.
+
+**Params:**
+
+- `id`: identificador del médico. Debe ser un número entero positivo.
+
+**Respuestas:**
+
+- `200 OK`: devuelve el médico encontrado.
+- `400 Bad Request`: el ID ingresado no es válido.
+- `404 Not Found`: no existe un médico con ese ID.
+- `500 Internal Server Error`: error interno del servidor.
+
+### POST /medicos
+
+Registra un nuevo médico en el sistema.
+
+**Body JSON:**
+
+```json
+{
+  "nombre": "Laura Martínez",
+  "especialidad": "Nutrición",
+  "matricula": "MP-2001",
+  "disponible": true
+}
+```
+
+El identificador es generado automáticamente por la aplicación.
+
+**Respuestas:**
+
+- `201 Created`: médico registrado correctamente.
+- `400 Bad Request`: los datos enviados no cumplen con el esquema de validación.
+- `500 Internal Server Error`: error interno del servidor.
+
+### PUT /medicos/:id
+
+Actualiza los datos de un médico existente.
+
+**Params:**
+
+- `id`: identificador del médico que se desea actualizar. Debe ser un número entero positivo.
+
+**Body JSON:**
+
+```json
+{
+  "nombre": "Laura Martínez",
+  "especialidad": "Nutrición",
+  "matricula": "MP-2001",
+  "disponible": false
+}
+```
+
+**Respuestas:**
+
+- `200 OK`: médico actualizado correctamente.
+- `400 Bad Request`: el ID o los datos enviados no son válidos.
+- `404 Not Found`: no existe un médico con ese ID.
+- `500 Internal Server Error`: error interno del servidor.
+
+### DELETE /medicos/:id
+
+Elimina un médico existente.
+
+**Params:**
+
+- `id`: identificador del médico que se desea eliminar. Debe ser un número entero positivo.
+
+**Respuestas:**
+
+- `204 No Content`: médico eliminado correctamente.
+- `400 Bad Request`: el ID ingresado no es válido.
+- `404 Not Found`: no existe un médico con ese ID.
+- `500 Internal Server Error`: error interno del servidor.
 
 ### Ejemplo para crear un médico
 
