@@ -34,7 +34,6 @@ export function errorHandler(
       code: error.code,
       details: error.details,
     });
-
     return;
   }
 
@@ -46,5 +45,5 @@ export function errorHandler(
     code: "INTERNAL_ERROR",
     details: [],
   });
+  return;
 }
-

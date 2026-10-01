@@ -8,11 +8,11 @@ import {
 } from "../services/medicosService.js";
 import { AppError } from "../middleware/errorHandler.js";
 
-export function obtenerMedicos(
+export async function obtenerMedicos(
   req: Request,
   res: Response,
   next: NextFunction,
-): void {
+): Promise<void> {
   try {
     const especialidad =
       typeof req.query.especialidad === "string"
@@ -29,16 +29,17 @@ export function obtenerMedicos(
     const medicos = listarMedicos(especialidad, disponible);
 
     res.status(200).json(medicos);
+    return;
   } catch (error) {
     next(error);
   }
 }
 
-export function obtenerMedicoPorId(
+export async function obtenerMedicoPorId(
   req: Request,
   res: Response,
   next: NextFunction,
-): void {
+): Promise<void> {
   try {
     const id = Number(req.params.id);
 
@@ -67,30 +68,32 @@ export function obtenerMedicoPorId(
     }
 
     res.status(200).json(medico);
+    return;
   } catch (error) {
     next(error);
   }
 }
 
-export function registrarMedico(
+export async function registrarMedico(
   req: Request,
   res: Response,
   next: NextFunction,
-): void {
+): Promise<void> {
   try {
     const nuevoMedico = crearMedico(req.body);
 
     res.status(201).json(nuevoMedico);
+    return;
   } catch (error) {
     next(error);
   }
 }
 
-export function modificarMedico(
+export async function modificarMedico(
   req: Request,
   res: Response,
   next: NextFunction,
-): void {
+): Promise<void> {
   try {
     const id = Number(req.params.id);
 
@@ -119,16 +122,17 @@ export function modificarMedico(
     }
 
     res.status(200).json(medicoActualizado);
+    return;
   } catch (error) {
     next(error);
   }
 }
 
-export function darDeBajaMedico(
+export async function darDeBajaMedico(
   req: Request,
   res: Response,
   next: NextFunction,
-): void {
+): Promise<void> {
   try {
     const id = Number(req.params.id);
 
@@ -157,7 +161,9 @@ export function darDeBajaMedico(
     }
 
     res.status(204).send();
+    return;
   } catch (error) {
     next(error);
   }
 }
+

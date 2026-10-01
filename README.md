@@ -366,7 +366,45 @@ Las respuestas generadas por la herramienta fueron revisadas, probadas y adaptad
 | Mock Server | ChatGPT | Cómo simular respuestas de TurnosRed en Postman | Ejemplo de endpoints y respuestas simuladas | Se configuraron casos `200` y `404` con datos del proyecto |
 | Documentación | ChatGPT | Cómo actualizar el README para documentar la Actividad 2 | Estructura de documentación técnica | Se revisaron rutas, comandos, ejemplos y variables utilizadas |
 
+## Refactorización de Controllers
+
+La API fue refactorizada para mejorar la separación de responsabilidades y mantener una arquitectura organizada basada en controladores.
+
+Los controladores de Turnos y Médicos utilizan funciones asincrónicas (`async`) y retornos explícitos para evitar que la ejecución continúe luego de enviar una respuesta al cliente.
+
+También se incorporó `generalController.ts`, encargado de gestionar el endpoint de bienvenida y las solicitudes realizadas hacia rutas inexistentes.
+
+El endpoint de bienvenida:
+
+```text
+GET /
+```
+
+responde con código `200 OK`.
+
+Las rutas inexistentes son gestionadas por el controller general y responden con código `404 Not Found`:
+
+```json
+{
+  "status": 404,
+  "message": "Ruta no encontrada",
+  "code": "NOT_FOUND"
+}
+```
+
+## Happy Path y Unhappy Path
+
+La API fue verificada nuevamente mediante Postman después de la refactorización.
+
+Se comprobaron escenarios exitosos (Happy Path), como el listado de turnos con `200 OK`, la creación de turnos con `201 Created` y el acceso correcto al endpoint de bienvenida.
+
+También se comprobaron escenarios de error (Unhappy Path), incluyendo IDs inexistentes con `404 Not Found`, datos inválidos con `400 Bad Request` y rutas inexistentes con `404 Not Found`.
+
+Las pruebas automatizadas de Postman permiten verificar los códigos HTTP, la estructura JSON y los mensajes devueltos por la API.
+
 ## Autor
 
 Proyecto académico desarrollado para la materia Integraciones Web.
+
+
 

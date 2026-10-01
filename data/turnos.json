@@ -28,5 +28,15 @@
     "hora": "09:30",
     "confirmado": true,
     "medicoId": 1
+  },
+  {
+    "id": 108,
+    "paciente": "Juan Perez",
+    "documento": "40123456",
+    "especialidad": "pediatría",
+    "fecha": "2026-10-10",
+    "hora": "09:30",
+    "confirmado": true,
+    "medicoId": 1
   }
 ]

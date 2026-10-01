@@ -61,6 +61,7 @@ export async function listarTurnos(
     });
 
     res.status(200).json(resultado);
+    return;
   } catch (error) {
     next(error);
   }
@@ -100,6 +101,7 @@ export async function buscarTurno(
     }
 
     res.status(200).json(turno);
+    return;
   } catch (error) {
     next(error);
   }
@@ -141,6 +143,7 @@ export async function crearTurno(
     eventosTurnos.emit("turno:creado", nuevoTurno);
 
     res.status(201).json(nuevoTurno);
+    return;
   } catch (error) {
     next(error);
   }
@@ -202,6 +205,7 @@ export async function actualizarTurno(
     eventosTurnos.emit("turno:actualizado", turnoActualizado);
 
     res.status(200).json(turnoActualizado);
+    return;
   } catch (error) {
     next(error);
   }
@@ -247,8 +251,8 @@ export async function eliminarTurno(
     eventosTurnos.emit("turno:eliminado", turnoEliminado);
 
     res.status(204).send();
+    return;
   } catch (error) {
     next(error);
   }
 }
-
