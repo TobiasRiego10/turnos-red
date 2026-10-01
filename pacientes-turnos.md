@@ -32,6 +32,7 @@ export interface Paciente {
   telefono: string;
   email: string;
 }
+```
 ## 2. Endpoints RESTful propuestos
 
 Siguiendo una organización basada en Clean Architecture, se propone separar
